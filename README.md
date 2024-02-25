@@ -18,5 +18,6 @@ It will continue to snapshot the workspaces, whenever there is a change in works
 
 - TODO: 
     find a fast and low res snapshot method
+  - add dependencies list grim python3.   
 
 
