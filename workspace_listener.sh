@@ -1,17 +1,16 @@
 #!/bin/sh
 
-screen_shot() {
+screen_shot() {     # take a screenshot of the current workspace
     grim /tmp/workspace"$(hyprctl activeworkspace | head -n1 | cut -d " " -f 3)".png
 }
 
-rm_ws() {
+rm_ws() {        # remove the destroyed workspace screenshot
     rm /tmp/workspace"$1".png -f
 }
 
 handle() {
   case $1 in
       workspace*) screen_shot ;;
-      # take the data from the socket and pass it to the function
       destroyworkspace*) rm_ws "$(echo $1 | cut -d '>' -f 3)" ;;
   esac
 }
