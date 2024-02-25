@@ -3,6 +3,7 @@
 
 
 made for [Hyprland](https://hyprland.org)
+
 bind the _workspaced.py_ to a key or to waybar , and get a convenient way to switch between workspaces
 with previews of the windows in each workspace.
 
@@ -29,3 +30,5 @@ requeriments:
 
 - TODO: 
     find a fast and low res snapshot method
+    when switching too fast, 2 seconds delay is too little to get the screenshot in time
+    and also respect any possible animation duration
