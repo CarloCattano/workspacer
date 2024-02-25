@@ -2,7 +2,7 @@
 ![ws2](https://github.com/CarloCattano/workspacer/assets/17380530/5d28bcfc-3270-46b2-8372-33d504880855)
 
 
-made for *Hyprland*
+made for [https://hyprland.org/](Hyprland)
 
 bind the _workspaced.py_ to a key or to waybar , and get a convenient way to switch between workspaces
 with previews of the windows in each workspace.
