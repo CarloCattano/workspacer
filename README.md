@@ -14,7 +14,7 @@ In my case I write it into hypr/hyrland.conf
 ```bash
 exec-once = $HOME/scripts/hypr/workspace_listener.sh
 ```
-It will continue to snapshot the workspaces, whenever there is a change in workspace
+It will continue to snapshot the workspaces, whenever there is a change in workspace, by using Hyprland own's IPC.
 
 - TODO: 
     find a fast and low res snapshot method
