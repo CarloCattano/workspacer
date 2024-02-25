@@ -38,3 +38,4 @@ requeriments:
     find a fast and low res snapshot method
     when switching too fast, 2 seconds delay is too little to get the screenshot in time
     and also respect any possible animation duration
+    - add a way to navigate the options with vim keys hjkl
