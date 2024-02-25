@@ -25,6 +25,7 @@ handle() {
   case $1 in
       workspace*) screen_shot ;;
       createworkspace*) screen_shot ;;
+      closewindow*) rm_ws "$(echo $1 | cut -d '>' -f 3)" ;;
       destroyworkspace*) rm_ws "$(echo $1 | cut -d '>' -f 3)" ;;
   esac
 }
