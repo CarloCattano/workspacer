@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# delete previous screenshots if any
+rm /tmp/workspace*.png -f
+
 screen_shot() {     # take a screenshot of the current workspace
     sleep 2
     grim /tmp/workspace"$(hyprctl activeworkspace | head -n1 | cut -d " " -f 3)".png
