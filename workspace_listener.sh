@@ -13,7 +13,7 @@ rm /tmp/workspace*.png -f
 # if the difference is greater than 25 seconds, take a new screenshot
 
 shot_intervals() {
-    active_workspace=$(hyprctl activeworkspace -j | jq '.id')
+    active_workspace=$(hyprctl activeworkspace -j | jq '.name')
     if [ ! -f /tmp/workspace"$active_workspace".png ]; then
         screen_shot
         return
@@ -33,7 +33,7 @@ shot_intervals() {
 screen_shot() {     # take a screenshot of the current workspace
     # hyprctl keyword animations:enabled false 2> /dev/null
     sleep 0.6
-    grim -l1 /tmp/workspace"$(hyprctl activeworkspace -j | jq '.id')".png
+    grim -l1 /tmp/workspace"$(hyprctl activeworkspace -j | jq '.name')".png
     # hyprctl keyword animations:enabled true 2> /dev/null
 }
 
