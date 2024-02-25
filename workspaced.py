@@ -10,9 +10,13 @@ from gi.repository import Gtk, GdkPixbuf, Gdk, GLib
 
 class WorkspaceSelector(Gtk.Window):
     def __init__(self):
-        Gtk.Window.__init__(self, title="Workspace Selector")
-        self.set_default_size(800, 700)
+        Gtk.Window.__init__(self, title="Workspace Selector")       
+
+        width = 900
+        height = 700
+
         marg = 42
+        self.set_default_size(width, height)        #e(800, 700)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=marg)
         self.add(box)
@@ -37,10 +41,12 @@ class WorkspaceSelector(Gtk.Window):
         if num_workspaces > 3:
             self.num_columns = 3
             self.num_rows = (num_workspaces + self.num_columns - 1) // self.num_columns
-        elif num_workspaces >= 2:
+        elif num_workspaces <= 3:
             self.num_columns = num_workspaces
             self.num_rows = 1
-
+            box.set_margin_top(height / 2)
+            box.set_margin_bottom(height / 2)
+        
         self.num_rows = (num_workspaces + self.num_columns - 1) // self.num_columns
         self.load_workspace_images(workspace_files)
 
