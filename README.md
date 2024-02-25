@@ -9,15 +9,25 @@ with previews of the windows in each workspace.
 #### configuration
 
 you need to run the _workspace_listener.sh_ script in the background to get the previews of the windows in each workspace.
-In my case I write it into hypr/hyrland.conf
+In my case I write it into ~/.config/hypr/hyrland.conf
 
 ```bash
 exec-once = $HOME/scripts/hypr/workspace_listener.sh
 ```
+
+requeriments:
+    - grim
+    - ~todo~
+
 It will continue to snapshot the workspaces, whenever there is a change in workspace, by using Hyprland own's IPC.
+
+#### example keybinding
+
+
+```bash
+    bind = $Mod , Y, exec , $HOME/scripts/hypr/workspaced.py
+```
 
 - TODO: 
     find a fast and low res snapshot method
-  - add dependencies list grim python3.   
-
 
