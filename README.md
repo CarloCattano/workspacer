@@ -23,9 +23,13 @@ requeriments:
 
 #### example keybinding
 
-
 ```bash
     bind = $Mod , Y, exec , $HOME/scripts/hypr/workspaced.py
+```
+
+#### floating rule
+```bash
+    windowrule = float, title:^(Workspace Selector)$
 ```
 
 - TODO: 

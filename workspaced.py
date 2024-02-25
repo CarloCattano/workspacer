@@ -5,12 +5,13 @@ import glob
 
 gi.require_version('Gtk', '3.0')
 
-from gi.repository import Gtk, GdkPixbuf, Gdk  # Import Gdk module
+# Import Gdk module
+from gi.repository import Gtk, GdkPixbuf, Gdk, GLib
 
 class WorkspaceSelector(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Workspace Selector")
-        self.set_default_size(800, 600)
+        self.set_default_size(800, 700)
         marg = 42
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=marg)
@@ -33,10 +34,10 @@ class WorkspaceSelector(Gtk.Window):
         workspace_files = sorted(glob.glob('/tmp/workspace*.png'))
         num_workspaces = len(workspace_files)
 
-        if num_workspaces > 2:
+        if num_workspaces > 3:
             self.num_columns = 3
             self.num_rows = (num_workspaces + self.num_columns - 1) // self.num_columns
-        else:
+        elif num_workspaces >= 2:
             self.num_columns = num_workspaces
             self.num_rows = 1
 
@@ -51,7 +52,7 @@ class WorkspaceSelector(Gtk.Window):
         # Calculate number of rows and columns for the grid
         window_width = self.get_size()[0]
         image_width = window_width // self.num_columns
-        image_height = image_width * 2 // 2  # aspect ratio 
+        image_height = image_width 
 
         for i, workspace_file in enumerate(workspace_files):
             image = Gtk.Image()
