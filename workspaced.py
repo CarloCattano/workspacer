@@ -20,7 +20,6 @@ class WorkspaceSelector(Gtk.Window):
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=marg)
         self.add(box)
-
         box.set_margin_top(marg)
         box.set_margin_bottom(marg)
         box.set_margin_start(marg)
