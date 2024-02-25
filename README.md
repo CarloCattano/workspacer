@@ -18,8 +18,8 @@ exec-once = $HOME/scripts/hypr/workspace_listener.sh
 It will continue to snapshot the workspaces, whenever there is a change in workspace, by using Hyprland own's IPC.
 
 requeriments:
-    - grim - cli screenshot tool
-    - jq - json parser
+    - grim cli screenshot tool
+    - jq   json parser
 
     - ~todo~
 
