@@ -45,7 +45,7 @@ class WorkspaceSelector(Gtk.Window):
             self.num_rows = 1
             box.set_margin_top(height / 2)
             box.set_margin_bottom(height / 2)
-        elif num_workspaces == 1:
+        if num_workspaces == 1:
             self.num_columns = 1
             self.num_rows = 1
             box.set_margin_top(height / 2)
