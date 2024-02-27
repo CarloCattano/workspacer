@@ -2,28 +2,28 @@
 import gi
 import os
 import glob
+from time import sleep
 
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk, GdkPixbuf, Gdk, GLib
 
-current_workspace = int(os.popen("hyprctl activeworkspace -j | jq '.id'").read())
-
-# get the geometry of the active monitor
-geometry = os.popen("hyprctl monitors -j | jq -r '.[] | select(.focused) | \"\(.x) \(.y) \(.width) \(.height)\"'").read().split()
-offset_x = int(geometry[0])
-offset_y = int(geometry[1])
-width = int(geometry[2])
-height = int(geometry[3])
-
-geometry = f"{offset_x},{offset_y} {width}x{height}"
-
-os.system(f'grim -l1 -g {geometry} /tmp/workspace{current_workspace}.png')
+current_workspace = None
 
 class WorkspaceSelector(Gtk.Window):
     def __init__(self):
+        # Take a screenshot of the current workspace before launching the window
+        current_workspace = int(os.popen("hyprctl activeworkspace -j | jq '.id'").read())
+        geometry = os.popen("hyprctl monitors -j | jq -r '.[] | select(.focused) | \"\(.x) \(.y) \(.width) \(.height)\"'").read().split()
+        offset_x = int(geometry[0])
+        offset_y = int(geometry[1])
+        width = int(geometry[2])
+        height = int(geometry[3])
+        geometry = f"{offset_x},{offset_y} {width}x{height}"
+        os.system(f'grim -l1 -g {geometry} /tmp/workspace{current_workspace}.png')
+        
+        # GTK START
         Gtk.Window.__init__(self, title="Workspace Selector")
-
         width = 800
         height = 700
 
@@ -39,18 +39,14 @@ class WorkspaceSelector(Gtk.Window):
         box.set_margin_end(marg)
 
         grid = Gtk.Grid()
-
         grid.set_column_homogeneous(True)
-       
         grid.set_column_spacing(marg)
         grid.set_row_spacing(marg)
-
-        box.pack_start(grid, True, True, 0)
-
         self.grid = grid
 
-        # make background transparent
+        box.pack_start(grid, True, True, 0)
         self.set_app_paintable(True)
+
         self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 0))  # Set transparent background
 
         workspace_files = sorted(glob.glob('/tmp/workspace*.png'))
