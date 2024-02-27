@@ -28,6 +28,7 @@ class WorkspaceSelector(Gtk.Window):
         height = 700
 
         marg = 42
+
         self.set_default_size(width, height)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=marg)
