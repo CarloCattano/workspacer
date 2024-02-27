@@ -21,7 +21,6 @@ It will continue to snapshot the workspaces, whenever there is a change in works
 requeriments:
     - grim cli screenshot tool
     - jq   json parser
-    - ~todo~
 
 #### example keybinding
 
