@@ -69,7 +69,9 @@ class WorkspaceSelector(Gtk.Window):
             image.set_from_pixbuf(pixbuf)
             button = Gtk.Button()
             button.add(image)
-            button.connect("clicked", self.on_workspace_selected, i)
+            img_index = int(workspace_file.split('workspace')[1].split('.png')[0]) - 1
+
+            button.connect("clicked", self.on_workspace_selected, img_index)
             column = i % self.num_columns
             row = i // self.num_columns
 

@@ -16,7 +16,7 @@ screen_shot() {     # take a screenshot of the current workspace
 }
 
 rm_ws() {        # remove the destroyed workspace screenshot
-    rm /tmp/workspace"$1".png -f
+    rm /tmp/workspace$1.png -f
 }
 
 handle() {
