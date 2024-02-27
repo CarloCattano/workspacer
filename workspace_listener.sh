@@ -10,11 +10,9 @@ rm /tmp/workspace*.png -f
 # compare the current time with the time of the last screenshot in the workspace corresponding to the current workspace0
 
 screen_shot() {     # take a screenshot of the current workspace
+    sleep 0.5
     active_workspace=$(hyprctl activeworkspace -j | jq '.name')
-    # hyprctl keyword animations:enabled false 2> /dev/null
-    sleep 0.6
     grim -l1 /tmp/workspace"$active_workspace".png
-    # hyprctl keyword animations:enabled true 2> /dev/null
 }
 
 rm_ws() {        # remove the destroyed workspace screenshot
@@ -26,6 +24,7 @@ handle() {
       workspace*) screen_shot ;;
       createworkspace*) screen_shot ;;
       destroyworkspace*) rm_ws "$(echo $1 | cut -d '>' -f 3)" ;;
+      closewindow*) screen_shot ;;
   esac
 }
 

@@ -15,12 +15,12 @@ In my case I write it into ~/.config/hypr/hyrland.conf
 ```bash
 exec-once = $HOME/scripts/hypr/workspace_listener.sh
 ```
+
 It will continue to snapshot the workspaces, whenever there is a change in workspace, by using Hyprland own's IPC.
 
 requeriments:
     - grim cli screenshot tool
     - jq   json parser
-
     - ~todo~
 
 #### example keybinding
@@ -35,7 +35,5 @@ requeriments:
 ```
 
 - TODO: 
-    find a fast and low res snapshot method
-    when switching too fast, 2 seconds delay is too little to get the screenshot in time
-    and also respect any possible animation duration
     - add a way to navigate the options with vim keys hjkl
+    - When a window is removed , check if the workspace is empty and remove it

@@ -1,4 +1,4 @@
-#!/sbin/python3
+#!/usr/bin/env python3
 import gi
 import os
 import glob
@@ -41,23 +41,25 @@ class WorkspaceSelector(Gtk.Window):
             self.num_columns = 3
             self.num_rows = (num_workspaces + self.num_columns - 1) // self.num_columns
         elif num_workspaces <= 3:
-            self.num_columns = num_workspaces
             self.num_rows = 1
+            self.num_columns = num_workspaces
             box.set_margin_top(height / 2)
             box.set_margin_bottom(height / 2)
         if num_workspaces == 1:
-            self.num_columns = 1
             self.num_rows = 1
+            self.num_columns = 1
             box.set_margin_top(height / 2)
             box.set_margin_bottom(height / 2)
 
-        self.num_rows = (num_workspaces + self.num_columns - 1) // self.num_columns
         self.load_workspace_images(workspace_files)
 
     def load_workspace_images(self, workspace_files):
         # Remove existing widgets from the grid
         for child in self.grid.get_children():
             self.grid.remove(child)
+
+        # Get the current workspace
+        current_workspace = int(os.popen("hyprctl activeworkspace -j | jq '.id'").read())
 
         # Calculate number of rows and columns for the grid
         window_width = self.get_size()[0]
@@ -73,13 +75,27 @@ class WorkspaceSelector(Gtk.Window):
             button.connect("clicked", self.on_workspace_selected, i)
             column = i % self.num_columns
             row = i // self.num_columns
+
+            # current workspace button style
+            if i + 1 == current_workspace:
+                button.get_style_context().add_class("current-workspace")
+            else: 
+                button.get_style_context().add_class("workspace-button")
+            
             self.grid.attach(button, column, row, 1, 1)
 
         self.connect("key-press-event", self.on_key_press)
 
     def on_workspace_selected(self, button, workspace_index):
-        os.system(f'hyprctl dispatch workspace {workspace_index + 1}')
-        self.destroy()
+        
+        current = int(os.popen("hyprctl activeworkspace -j | jq '.id'").read())
+        
+        if current == workspace_index + 1:
+            self.destroy()
+        
+        elif current != workspace_index + 1:
+            os.system(f'hyprctl dispatch workspace {workspace_index + 1}')
+            self.destroy()
 
     def on_key_press(self, widget, event):
         keyval = event.keyval
@@ -89,5 +105,25 @@ class WorkspaceSelector(Gtk.Window):
 win = WorkspaceSelector()
 win.connect("destroy", Gtk.main_quit)
 win.show_all()
+win.set_focus(None)
+# Apply CSS style for highlighting current workspace button
+css_provider = Gtk.CssProvider()
+css_provider.load_from_data("""
+    .current-workspace {
+        background-color: yellow;
+    }
+
+    .workspace-button {
+        background-color: transparent;
+    }
+
+    .workspace-button:focus {
+        background-color: transparent;
+    }
+""")
+screen = Gdk.Screen.get_default()
+style_context = win.get_style_context()
+style_context.add_provider_for_screen(screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
 Gtk.main()
 
