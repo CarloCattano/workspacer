@@ -7,12 +7,18 @@ gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk, GdkPixbuf, Gdk, GLib
 
-
-
 current_workspace = int(os.popen("hyprctl activeworkspace -j | jq '.id'").read())
 
-# make a screenshot before showing the UI 
-os.system(f'grim -l1 /tmp/workspace{current_workspace}.png')
+# get the geometry of the active monitor
+geometry = os.popen("hyprctl monitors -j | jq -r '.[] | select(.focused) | \"\(.x) \(.y) \(.width) \(.height)\"'").read().split()
+offset_x = int(geometry[0])
+offset_y = int(geometry[1])
+width = int(geometry[2])
+height = int(geometry[3])
+
+geometry = f"{offset_x},{offset_y} {width}x{height}"
+
+os.system(f'grim -l1 -g {geometry} /tmp/workspace{current_workspace}.png')
 
 class WorkspaceSelector(Gtk.Window):
     def __init__(self):

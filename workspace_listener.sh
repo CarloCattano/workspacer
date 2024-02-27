@@ -9,6 +9,7 @@ screen_shot()
 
     offset_x=$x
     offset_y=$y
+
     geometry="${offset_x},${offset_y} ${width}x${height}"
 
     active_workspace=$(hyprctl activeworkspace -j | jq '.id')
