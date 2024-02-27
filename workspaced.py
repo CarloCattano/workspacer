@@ -13,10 +13,10 @@ class WorkspaceSelector(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Workspace Selector")
 
-        width = 900
+        width = 800
         height = 700
 
-        marg = 42
+        marg = 60
         self.set_default_size(width, height)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=marg)
@@ -28,6 +28,8 @@ class WorkspaceSelector(Gtk.Window):
 
         grid = Gtk.Grid()
 
+        grid.set_column_homogeneous(True)
+       
         grid.set_column_spacing(marg)
         grid.set_row_spacing(marg)
 
@@ -37,17 +39,19 @@ class WorkspaceSelector(Gtk.Window):
 
         # make background transparent
         self.set_app_paintable(True)
+        self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 0))  # Set transparent background
 
         workspace_files = sorted(glob.glob('/tmp/workspace*.png'))
         num_workspaces = len(workspace_files)
 
         if num_workspaces > 3:
-            self.num_columns = 3
+            self.num_columns = (num_workspaces + 2) // 3
             self.num_rows = (num_workspaces + self.num_columns - 1) // self.num_columns
         elif num_workspaces <= 3:
+            # use bigger margin for the top
+            grid.set_row_homogeneous(True)
             self.num_rows = 1
             self.num_columns = num_workspaces
-            self.grid.set_column_homogeneous(True)
             self.set_default_size(width, height // 2 * self.num_rows)
 
         if num_workspaces == 1:
@@ -65,7 +69,8 @@ class WorkspaceSelector(Gtk.Window):
         window_width = self.get_size()[0]
         image_width = window_width // self.num_columns
         image_height = image_width 
-
+        
+        
         # Load the workspace images
         for i, workspace_file in enumerate(workspace_files):
             image = Gtk.Image()
@@ -73,22 +78,20 @@ class WorkspaceSelector(Gtk.Window):
             image.set_from_pixbuf(pixbuf)
             button = Gtk.Button()
             button.add(image)
-            # make button background transparent
-            button.set_app_paintable(True)
-
+            
             img_index = int(workspace_file.split('workspace')[1].split('.png')[0]) - 1
 
             button.connect("clicked", self.on_workspace_selected, img_index)
 
             column = i % self.num_columns
             row = i // self.num_columns
-
+            
             # current workspace marker
             if img_index + 1 == current_workspace:
                 button.get_style_context().add_class("current-workspace")
             else: 
                 button.get_style_context().add_class("workspace-button")
-
+                
             self.grid.attach(button, column, row, 1, 1)
 
         self.connect("key-press-event", self.on_key_press)
@@ -110,20 +113,19 @@ win = WorkspaceSelector()
 win.connect("destroy", Gtk.main_quit)
 win.show_all()
 win.set_focus(None)
-# Apply CSS style for highlighting current workspace button
 css_provider = Gtk.CssProvider()
 css_provider.load_from_data("""
 
     .current-workspace {
         background-color: rgba(255, 255, 0, 0.5);
     }
-
+                       
     .workspace-button {
-        background-color: transparent;
-    }
+        background-color: rgba(0, 0, 0, 0);
 
+    }
     .workspace-button:focus {
-        background-color: transparent;
+        background-color: rgba(0, 0, 0, 0);
     }
 """)
 screen = Gdk.Screen.get_default()
