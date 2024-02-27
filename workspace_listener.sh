@@ -11,8 +11,8 @@ rm /tmp/workspace*.png -f
 
 screen_shot() {     # take a screenshot of the current workspace
     sleep 0.5
-    active_workspace=$(hyprctl activeworkspace -j | jq '.name')
-    grim -l1 /tmp/workspace"$active_workspace".png
+    active_workspace=$(hyprctl activeworkspace -j | jq '.id')
+    grim -l1 /tmp/workspace$active_workspace.png
 }
 
 rm_ws() {        # remove the destroyed workspace screenshot

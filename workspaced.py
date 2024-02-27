@@ -33,6 +33,7 @@ class WorkspaceSelector(Gtk.Window):
         box.pack_start(grid, True, True, 0)  # Add the grid to the box
 
         self.grid = grid
+        self.current_workspace = None
 
         workspace_files = sorted(glob.glob('/tmp/workspace*.png'))
         num_workspaces = len(workspace_files)
@@ -43,13 +44,9 @@ class WorkspaceSelector(Gtk.Window):
         elif num_workspaces <= 3:
             self.num_rows = 1
             self.num_columns = num_workspaces
-            box.set_margin_top(height / 2)
-            box.set_margin_bottom(height / 2)
         if num_workspaces == 1:
             self.num_rows = 1
             self.num_columns = 1
-            box.set_margin_top(height / 2)
-            box.set_margin_bottom(height / 2)
 
         self.load_workspace_images(workspace_files)
 
@@ -83,9 +80,9 @@ class WorkspaceSelector(Gtk.Window):
                 button.get_style_context().add_class("workspace-button")
             
             self.grid.attach(button, column, row, 1, 1)
-
+        
         self.connect("key-press-event", self.on_key_press)
-
+ 
     def on_workspace_selected(self, button, workspace_index):
         
         current = int(os.popen("hyprctl activeworkspace -j | jq '.id'").read())
