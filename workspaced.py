@@ -7,7 +7,12 @@ gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk, GdkPixbuf, Gdk, GLib
 
-current_workspace = None
+
+
+current_workspace = int(os.popen("hyprctl activeworkspace -j | jq '.id'").read())
+
+# make a screenshot before showing the UI 
+os.system(f'grim -l1 /tmp/workspace{current_workspace}.png')
 
 class WorkspaceSelector(Gtk.Window):
     def __init__(self):
@@ -16,13 +21,13 @@ class WorkspaceSelector(Gtk.Window):
         width = 800
         height = 700
 
-        marg = 60
+        marg = 42
         self.set_default_size(width, height)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=marg)
         self.add(box)
-        box.set_margin_top(marg)
-        box.set_margin_bottom(marg)
+        box.set_margin_top(marg * 3)
+        box.set_margin_bottom(marg * 3)
         box.set_margin_start(marg)
         box.set_margin_end(marg)
 
@@ -45,23 +50,24 @@ class WorkspaceSelector(Gtk.Window):
         num_workspaces = len(workspace_files)
 
         if num_workspaces > 3:
-            self.num_columns = (num_workspaces + 2) // 3
-            self.num_rows = (num_workspaces + self.num_columns - 1) // self.num_columns
+            # grid.set_row_homogeneous(True)
+            self.num_columns = (num_workspaces + 2) // 2
+            self.num_rows = (num_workspaces + self.num_columns - 2) // self.num_columns
         elif num_workspaces <= 3:
-            # use bigger margin for the top
             grid.set_row_homogeneous(True)
             self.num_rows = 1
             self.num_columns = num_workspaces
             self.set_default_size(width, height // 2 * self.num_rows)
 
-        if num_workspaces == 1:
-            self.num_rows = 1
-            self.num_columns = 1
+            if num_workspaces == 1:
+                self.num_rows = 1
+                self.num_columns = 1
 
         self.load_workspace_images(workspace_files)
 
     def load_workspace_images(self, workspace_files):
         global current_workspace  
+        
         if current_workspace is None:
             current_workspace = int(os.popen("hyprctl activeworkspace -j | jq '.id'").read())
 
@@ -78,7 +84,11 @@ class WorkspaceSelector(Gtk.Window):
             image.set_from_pixbuf(pixbuf)
             button = Gtk.Button()
             button.add(image)
-            
+
+            # make buttons less high
+            button.set_size_request(image_width, image_height / 2)
+            button.set_relief(Gtk.ReliefStyle.NONE)
+
             img_index = int(workspace_file.split('workspace')[1].split('.png')[0]) - 1
 
             button.connect("clicked", self.on_workspace_selected, img_index)
@@ -98,6 +108,7 @@ class WorkspaceSelector(Gtk.Window):
 
     def on_workspace_selected(self, button, workspace_index):
         global current_workspace  # Use the global variable
+        
         if current_workspace == workspace_index + 1:
             self.destroy()
         else:

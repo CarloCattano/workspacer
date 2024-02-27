@@ -31,12 +31,6 @@ rm_ws() {                       # remove the destroyed workspace screenshot
     rm /tmp/workspace$1.png -f
 }
 
-open_window() 
-{
-    sleep 1
-    screen_shot
-}
-
 handle() 
 {
   case $1 in
@@ -44,7 +38,6 @@ handle()
       createworkspace*) screen_shot ;;
       destroyworkspace*) rm_ws "$(echo $1 | cut -d '>' -f 3)" ;;
       closewindow*) closed_window;;
-      openwindow*) open_window ;;
   esac
 }
 
