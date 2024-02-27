@@ -13,7 +13,7 @@ screen_shot() {     # take a screenshot of the current workspace
     active_workspace=$(hyprctl activeworkspace -j | jq '.name')
     # hyprctl keyword animations:enabled false 2> /dev/null
     sleep 0.6
-    grim -l1 -o $(hyprctl -j monitors | jq -r '.[] | select(.focused) | .name') /tmp/workspace"$active_workspace".png
+    grim -l1 -o $(hyprctl -j monitors | jq -r '.[] | select(.focused) | .name') /tmp/workspace$active_workspace.png
     # hyprctl keyword animations:enabled true 2> /dev/null
 }
 
