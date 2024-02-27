@@ -2,10 +2,17 @@
 
 rm /tmp/workspace*.png -f
 
-screen_shot() {     # take a screenshot of the current workspace
-    sleep 0.5
+screen_shot() {
+    # Store the x, y, width, and height values of the active monitor into variables
+    read x y width height <<< $(hyprctl monitors -j | jq -r '.[] | select(.focused) | "\(.x) \(.y) \(.width) \(.height)"')
+
+    offset_x=$x
+    offset_y=$y
+
+    geometry="${offset_x},${offset_y} ${width}x${height}"
+
     active_workspace=$(hyprctl activeworkspace -j | jq '.id')
-    grim -l1 /tmp/workspace$active_workspace.png
+    grim -t png -l1 -g "$geometry" "/tmp/workspace$active_workspace.png"
 }
 
 rm_ws() {        # remove the destroyed workspace screenshot
