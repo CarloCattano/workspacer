@@ -27,6 +27,7 @@ by using Hyprland own's [IPC](https://wiki.hyprland.org/IPC/) socket
 
 - ```grim```  cli screenshot tool
 - ```jq``` json parser
+- ```socat``` multipurpose relay
 
 #### example keybinding
 
