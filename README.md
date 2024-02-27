@@ -1,5 +1,6 @@
 ## Visual workspace switcher
 ![ws2](https://github.com/CarloCattano/workspacer/assets/17380530/5d28bcfc-3270-46b2-8372-33d504880855)
+![image](https://github.com/CarloCattano/workspacer/assets/17380530/3641ef97-ab04-48a4-aa3e-922ee42b1fbc)
 
 
 made for [Hyprland](https://hyprland.org)
