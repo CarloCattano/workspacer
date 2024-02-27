@@ -13,7 +13,8 @@ screen_shot()
     geometry="${offset_x},${offset_y} ${width}x${height}"
 
     active_workspace=$(hyprctl activeworkspace -j | jq '.id')
-    grim -t png -l1 -g "$geometry" "/tmp/workspace$active_workspace.png"
+    # grim -t png -l1 -g "$geometry" "/tmp/workspace$active_workspace.png"
+    grim -t jpeg -q 50 -g "$geometry" "/tmp/workspace$active_workspace.png"
 }
 
 closed_window() 

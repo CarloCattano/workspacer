@@ -20,11 +20,11 @@ class WorkspaceSelector(Gtk.Window):
         width = int(geometry[2])
         height = int(geometry[3])
         geometry = f"{offset_x},{offset_y} {width}x{height}"
-        os.system(f'grim -l1 -g {geometry} /tmp/workspace{current_workspace}.png')
-        
+        # os.system(f'grim -l1 -g {geometry} /tmp/workspace{current_workspace}.png')
+        os.system(f'grim -type jpeg -q 50 /tmp/workspace{current_workspace}.png')       
         # GTK START
         Gtk.Window.__init__(self, title="Workspace Selector")
-        width = 800
+        width = 1000
         height = 700
 
         marg = 42
@@ -47,15 +47,14 @@ class WorkspaceSelector(Gtk.Window):
         box.pack_start(grid, True, True, 0)
         self.set_app_paintable(True)
 
-        self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 0))  # Set transparent background
-
+        # self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 0))  # Set transparent background
         workspace_files = sorted(glob.glob('/tmp/workspace*.png'))
         num_workspaces = len(workspace_files)
 
-        if num_workspaces > 3:
-            # grid.set_row_homogeneous(True)
-            self.num_columns = (num_workspaces + 2) // 2
-            self.num_rows = (num_workspaces + self.num_columns - 2) // self.num_columns
+        if num_workspaces > 10:
+            self.num_columns = 5
+        if num_workspaces < 10 and num_workspaces > 3:
+            self.num_columns = 3
         elif num_workspaces <= 3:
             grid.set_row_homogeneous(True)
             self.num_rows = 1
@@ -131,7 +130,7 @@ css_provider = Gtk.CssProvider()
 css_provider.load_from_data("""
 
     .current-workspace {
-        background-color: rgba(255, 255, 0, 0.5);
+        background-color: rgba(255, 255, 0, 0.3);
     }
                        
     .workspace-button {
