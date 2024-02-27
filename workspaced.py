@@ -75,6 +75,7 @@ class WorkspaceSelector(Gtk.Window):
             button.add(image)
             # make button background transparent
             button.set_app_paintable(True)
+
             img_index = int(workspace_file.split('workspace')[1].split('.png')[0]) - 1
 
             button.connect("clicked", self.on_workspace_selected, img_index)
@@ -128,5 +129,5 @@ css_provider.load_from_data("""
 screen = Gdk.Screen.get_default()
 style_context = win.get_style_context()
 style_context.add_provider_for_screen(screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-
 Gtk.main()
+
