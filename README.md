@@ -4,12 +4,12 @@
 
 made for [Hyprland](https://hyprland.org)
 
-bind the _workspaced.py_ to a key or to waybar , and get a convenient way to switch between workspaces
-with previews of the windows in each workspace.
+bind the _workspaced.py_ to a key or to your bar, and get a convenient way to switch between workspaces with previews of the windows in each workspace.
 
 #### configuration
 
 you need to run the _workspace_listener.sh_ script in the background to get the previews of the windows in each workspace.
+
 In my case I write it into ~/.config/hypr/hyrland.conf
 
 ```bash
@@ -18,21 +18,24 @@ exec-once = $HOME/scripts/hypr/workspace_listener.sh
 
 It will continue to snapshot the workspaces, whenever there is a change in workspace, by using Hyprland own's IPC.
 
-requeriments:
-    - grim cli screenshot tool
-    - jq   json parser
+#### requeriments:
+
+- ```grim```  cli screenshot tool
+- ```jq``` json parser
 
 #### example keybinding
 
 ```bash
-    bind = $Mod , Y, exec , $HOME/scripts/hypr/workspaced.py
+bind = $Mod , Y, exec , $HOME/scripts/hypr/workspaced.py
 ```
 
 #### floating rule
 ```bash
-    windowrule = float, title:^(Workspace Selector)$
+windowrule = float, title:^(Workspace Selector)$
 ```
 
-- TODO: 
+### TODO : 
     - add a way to navigate the options with vim keys hjkl
-    - When a window is removed , check if the workspace is empty and remove it
+    - find faster screenshot mechanism
+	- test with animations
+~~When a window is removed , check if the workspace is empty and remove it~~
