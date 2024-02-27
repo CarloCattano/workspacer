@@ -16,7 +16,11 @@ In my case I write it into ~/.config/hypr/hyrland.conf
 exec-once = $HOME/scripts/hypr/workspace_listener.sh
 ```
 
-It will continue to snapshot the workspaces, whenever there is a change in workspace, by using Hyprland own's IPC.
+It will snapshot the workspaces, whenever:
+- a workspace is created/changed/destroyed
+- an application window is closed
+
+by using Hyprland own's [IPC](https://wiki.hyprland.org/IPC/) socket
 
 #### requeriments:
 
@@ -34,8 +38,19 @@ bind = $Mod , Y, exec , $HOME/scripts/hypr/workspaced.py
 windowrule = float, title:^(Workspace Selector)$
 ```
 
+#### waybar example 
+trigger when clicking on bar title
+```
+"hyprland/window": {
+		"format": "{}",
+		"separate-outputs": true,
+	            "on-click":"/home/YOUR_USER/../../workspaced.py",
+},
+```
+
 ### TODO : 
     - add a way to navigate the options with vim keys hjkl
     - find faster screenshot mechanism
 	- test with animations
+    - prevent double execution of the script or instances of the script
 ~~When a window is removed , check if the workspace is empty and remove it~~
