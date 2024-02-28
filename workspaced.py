@@ -2,6 +2,7 @@
 import gi
 import os
 import glob
+import json
 
 gi.require_version("Gtk", "3.0")
 
@@ -73,6 +74,19 @@ class WorkspaceSelector(Gtk.Window):
                 self.num_rows = 1
                 self.num_columns = 1
 
+        # Get the absolute path of the script's directory
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        # Construct the absolute path for color.conf
+        color_conf_path = os.path.join(script_dir, "colors.conf")
+
+        # Load colors from config file
+        with open(color_conf_path, "r") as color_file:
+            colors = json.load(color_file)
+
+        self.current_workspace_color = colors.get("current_workspace")
+        self.workspace_button_color = colors.get("workspace_button")
+        self.workspace_button_focus_color = colors.get("workspace_button_focus")
+
         self.load_workspace_images(workspace_files)
 
     def load_workspace_images(self, workspace_files):
@@ -140,19 +154,19 @@ win.show_all()
 win.set_focus(None)
 css_provider = Gtk.CssProvider()
 css_provider.load_from_data(
-    """
+    f"""
 
-    .current-workspace {
-        background-color: rgba(255, 255, 0, 0.3);
-    }
+    .current-workspace {{
+        background-color: {win.current_workspace_color};
+    }}
 
-    .workspace-button {
-        background-color: rgba(0, 0, 0, 0);
+    .workspace-button {{
+        background-color: {win.workspace_button_color};
 
-    }
-    .workspace-button:focus {
-        background-color: rgba(0, 0, 0, 0);
-    }
+    }}
+    .workspace-button:focus {{
+        background-color: {win.workspace_button_focus_color};
+    }}
 """
 )
 screen = Gdk.Screen.get_default()
