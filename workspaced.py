@@ -31,7 +31,7 @@ class WorkspaceSelector(Gtk.Window):
         height = int(geometry[3])
 
         geometry = f"{offset_x},{offset_y} {width}x{height}"
-        os.system(f"grim -t jpeg -q 50 /tmp/workspace{current_workspace}.jpg")
+        os.system(f"grim -t jpeg -q 50 -g {geometry}  /tmp/workspace{current_workspace}.jpg")
         # GTK START
         width = 900
         height = 700
