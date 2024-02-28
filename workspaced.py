@@ -31,7 +31,7 @@ class WorkspaceSelector(Gtk.Window):
         height = int(geometry[3])
 
         geometry = f"{offset_x},{offset_y} {width}x{height}"
-        os.system(f"grim -t jpeg -q 50 -g {geometry}  /tmp/workspace{current_workspace}.jpg")
+        os.system(f"grim -t jpeg -q 50 -g '{geometry}' /tmp/workspace{current_workspace}.jpg")
         # GTK START
         width = 900
         height = 700
@@ -151,7 +151,9 @@ class WorkspaceSelector(Gtk.Window):
         keyval = event.keyval
         if keyval == Gdk.KEY_Escape or chr(keyval) == "q":
             self.destroy()
-
+    # detect clicks in the application window
+    # def on_button_press_event(self, widget, event):
+    #     print("clicked")
 # TODO destroy if mouse is clicked outside the window
   
 win = WorkspaceSelector()
