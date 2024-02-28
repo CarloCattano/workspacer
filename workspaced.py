@@ -62,7 +62,7 @@ class WorkspaceSelector(Gtk.Window):
         workspace_files = sorted(glob.glob("/tmp/workspace*.jpg"))
         num_workspaces = len(workspace_files)
 
-        if num_workspaces > 10:
+        if num_workspaces >= 10:
             self.num_columns = 5
         if num_workspaces < 10 and num_workspaces > 3:
             self.num_columns = 3
