@@ -10,9 +10,9 @@ from gi.repository import Gtk, GdkPixbuf, Gdk
 
 current_workspace = None
 
-
 class WorkspaceSelector(Gtk.Window):
     def __init__(self):
+        Gtk.Window.__init__(self, title="Workspace Selector")
         # Take a screenshot of the current workspace before launching the window
         current_workspace = int(
             os.popen("hyprctl activeworkspace -j | jq '.id'").read()
@@ -24,15 +24,16 @@ class WorkspaceSelector(Gtk.Window):
             .read()
             .split()
         )
+
         offset_x = int(geometry[0])
         offset_y = int(geometry[1])
         width = int(geometry[2])
         height = int(geometry[3])
+
         geometry = f"{offset_x},{offset_y} {width}x{height}"
-        os.system(f"grim -type jpeg -q 50 /tmp/workspace{current_workspace}.jpg")
+        os.system(f"grim -t jpeg -q 50 /tmp/workspace{current_workspace}.jpg")
         # GTK START
-        Gtk.Window.__init__(self, title="Workspace Selector")
-        width = 1000
+        width = 900
         height = 700
 
         marg = 42
@@ -55,7 +56,6 @@ class WorkspaceSelector(Gtk.Window):
         box.pack_start(grid, True, True, 0)
         self.set_app_paintable(True)
 
-        # self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 0))  # Set transparent background
         workspace_files = sorted(glob.glob("/tmp/workspace*.jpg"))
         num_workspaces = len(workspace_files)
 
@@ -118,7 +118,6 @@ class WorkspaceSelector(Gtk.Window):
             button = Gtk.Button()
             button.add(image)
 
-            # make buttons less high
             button.set_size_request(image_width, image_height / 2)
             button.set_relief(Gtk.ReliefStyle.NONE)
 
@@ -153,7 +152,7 @@ class WorkspaceSelector(Gtk.Window):
         if keyval == Gdk.KEY_Escape or chr(keyval) == "q":
             self.destroy()
 
-# Kill if mouse is clicked outside the window
+# TODO destroy if mouse is clicked outside the window
   
 win = WorkspaceSelector()
 win.connect("destroy", Gtk.main_quit)
