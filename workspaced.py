@@ -74,10 +74,16 @@ class WorkspaceSelector(Gtk.Window):
                 self.num_rows = 1
                 self.num_columns = 1
 
-        # Get the absolute path of the script's directory
+        # TODO : abstract all this file thins
+        
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        # Construct the absolute path for color.conf
         color_conf_path = os.path.join(script_dir, "colors.conf")
+        if not os.path.isfile(color_conf_path):
+            print(
+                "Error: colors.conf not found on script folder ",
+                color_conf_path,
+            )
+            exit()
 
         # Load colors from config file
         with open(color_conf_path, "r") as color_file:
@@ -86,6 +92,7 @@ class WorkspaceSelector(Gtk.Window):
         self.current_workspace_color = colors.get("current_workspace")
         self.workspace_button_color = colors.get("workspace_button")
         self.workspace_button_focus_color = colors.get("workspace_button_focus")
+        # ---------------------------------------------------------------------
 
         self.load_workspace_images(workspace_files)
 
