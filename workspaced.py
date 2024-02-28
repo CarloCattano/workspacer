@@ -29,8 +29,7 @@ class WorkspaceSelector(Gtk.Window):
         width = int(geometry[2])
         height = int(geometry[3])
         geometry = f"{offset_x},{offset_y} {width}x{height}"
-        # os.system(f'grim -l1 -g {geometry} /tmp/workspace{current_workspace}.png')
-        os.system(f"grim -type jpeg -q 50 /tmp/workspace{current_workspace}.png")
+        os.system(f"grim -type jpeg -q 50 /tmp/workspace{current_workspace}.jpgi")
         # GTK START
         Gtk.Window.__init__(self, title="Workspace Selector")
         width = 1000
@@ -57,7 +56,7 @@ class WorkspaceSelector(Gtk.Window):
         self.set_app_paintable(True)
 
         # self.override_background_color(Gtk.StateFlags.NORMAL, Gdk.RGBA(0, 0, 0, 0))  # Set transparent background
-        workspace_files = sorted(glob.glob("/tmp/workspace*.png"))
+        workspace_files = sorted(glob.glob("/tmp/workspace*.jpg"))
         num_workspaces = len(workspace_files)
 
         if num_workspaces > 10:
@@ -123,7 +122,7 @@ class WorkspaceSelector(Gtk.Window):
             button.set_size_request(image_width, image_height / 2)
             button.set_relief(Gtk.ReliefStyle.NONE)
 
-            img_index = int(workspace_file.split("workspace")[1].split(".png")[0]) - 1
+            img_index = int(workspace_file.split("workspace")[1].split(".jpg")[0]) - 1
 
             button.connect("clicked", self.on_workspace_selected, img_index)
 

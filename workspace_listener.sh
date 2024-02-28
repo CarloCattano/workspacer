@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rm /tmp/workspace*.png -f
+rm /tmp/workspace*.jpg -f
 
 screen_shot() 
 {
@@ -13,8 +13,7 @@ screen_shot()
     geometry="${offset_x},${offset_y} ${width}x${height}"
 
     active_workspace=$(hyprctl activeworkspace -j | jq '.id')
-    # grim -t png -l1 -g "$geometry" "/tmp/workspace$active_workspace.png"
-    grim -t jpeg -q 50 -g "$geometry" "/tmp/workspace$active_workspace.png"
+    grim -t jpeg -q 50 -g "$geometry" "/tmp/workspace$active_workspace.jpg"
 }
 
 closed_window() 
@@ -23,14 +22,14 @@ closed_window()
     is_last_window=$(hyprctl activeworkspace -j | jq '.windows')
  
     if [ $is_last_window -eq 0 ]; then
-        rm /tmp/workspace$1.png -f
+        rm /tmp/workspace$1.jpg -f
     else
         screen_shot
     fi
 }
 
 rm_ws() {                       # remove the destroyed workspace screenshot
-    rm /tmp/workspace$1.png -f
+    rm /tmp/workspace$1.jpg -f
 }
 
 handle() 
