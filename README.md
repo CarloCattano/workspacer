@@ -21,6 +21,8 @@ Ensure you have the following dependencies installed:
 
 Simply bind the `workspaced.py` script to a key or integrate it into your system bar for quick access to workspace previews and switching.
 
+- **Move Window to Workspace**: hold shift while clicking on a workspace, and the last active window will be moved to the selected workspace.
+
 #### Example Keybinding
 
 ```bash
