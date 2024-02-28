@@ -29,7 +29,7 @@ class WorkspaceSelector(Gtk.Window):
         width = int(geometry[2])
         height = int(geometry[3])
         geometry = f"{offset_x},{offset_y} {width}x{height}"
-        os.system(f"grim -type jpeg -q 50 /tmp/workspace{current_workspace}.jpgi")
+        os.system(f"grim -type jpeg -q 50 /tmp/workspace{current_workspace}.jpg")
         # GTK START
         Gtk.Window.__init__(self, title="Workspace Selector")
         width = 1000
@@ -73,7 +73,7 @@ class WorkspaceSelector(Gtk.Window):
                 self.num_rows = 1
                 self.num_columns = 1
 
-        # TODO : abstract all this file thins
+        # TODO : abstract all this file parsing
         
         script_dir = os.path.dirname(os.path.abspath(__file__))
         color_conf_path = os.path.join(script_dir, "colors.conf")
@@ -153,7 +153,8 @@ class WorkspaceSelector(Gtk.Window):
         if keyval == Gdk.KEY_Escape or chr(keyval) == "q":
             self.destroy()
 
-
+# Kill if mouse is clicked outside the window
+  
 win = WorkspaceSelector()
 win.connect("destroy", Gtk.main_quit)
 win.show_all()
