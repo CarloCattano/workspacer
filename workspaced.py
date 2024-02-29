@@ -194,6 +194,7 @@ class WorkspaceSelector(Gtk.Window):
         current_ws = int(os.popen("hyprctl activeworkspace -j | jq '.id'").read())
         if self.movewindow is True:
             self.move_last_focused_window(current_ws - 1)
+        self.destroy()
     
     def on_key_press(self, widget, event):
         keyval = event.keyval
