@@ -11,10 +11,11 @@ from gi.repository import Gtk, GdkPixbuf, Gdk
 
 current_workspace = None
 
-# Check if lock file exists, if it does, exit
+# Check for pid file, and if app is running, just focus the window
+# and exit from the new instance
 lock_file = "/tmp/workspace_selector.lock"
 if os.path.isfile(lock_file):
-    print("Another instance is already running. Exiting...")
+    os.system("hyprctl dispatch focuswindow title:'Workspace Selector'")
     exit()
 
 # Create lock file
@@ -22,9 +23,8 @@ with open(lock_file, "w") as f:
     try:
         fcntl.lockf(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except IOError:
-        print("Another instance is already running. Exiting...")
+        os.system("hyprctl dispatch focuswindow title:'Workspace Selector'")
         exit()
-
 
 class WorkspaceSelector(Gtk.Window):
     def __init__(self):
@@ -53,8 +53,9 @@ class WorkspaceSelector(Gtk.Window):
         # GTK START
         width = 900
         height = 700
-
         marg = 42
+
+        self.movewindow = False
 
         self.set_default_size(width, height)
 
@@ -64,6 +65,8 @@ class WorkspaceSelector(Gtk.Window):
         box.set_margin_bottom(marg * 3)
         box.set_margin_start(marg)
         box.set_margin_end(marg)
+
+        self.connect("button-press-event", self.on_click_bg)
 
         grid = Gtk.Grid()
         grid.set_column_homogeneous(True)
@@ -77,7 +80,7 @@ class WorkspaceSelector(Gtk.Window):
         workspace_files = sorted(glob.glob("/tmp/workspace*.jpg"))
         num_workspaces = len(workspace_files)
 
-        if num_workspaces > 10:
+        if num_workspaces >= 10:
             self.num_columns = 5
         if num_workspaces < 10 and num_workspaces > 3:
             self.num_columns = 3
@@ -155,26 +158,37 @@ class WorkspaceSelector(Gtk.Window):
 
         self.connect("key-press-event", self.on_key_press)
 
+    def move_last_focused_window(self, workspace_index):
+        last_focused_window = os.popen("hyprctl clients -j | jq '.[] | select(.focusHistoryID == 1) | .pid'").read().strip()
+        os.system(f"hyprctl dispatch focuswindow pid:" + str(last_focused_window))
+        os.system(f"hyprctl dispatch movetoworkspace " + str(workspace_index + 1))
+
+
     def on_workspace_selected(self, button, workspace_index):
-        global current_workspace  # Use the global variable
+        global current_workspace  
 
         if current_workspace == workspace_index + 1:
             self.destroy()
         else:
-            os.system(f"hyprctl dispatch workspace {workspace_index + 1}")
+            if self.movewindow is True:
+                self.move_last_focused_window(workspace_index)
+            else:
+                os.system(f"hyprctl dispatch workspace {workspace_index + 1}")
             self.destroy()
 
     def on_key_press(self, widget, event):
         keyval = event.keyval
+
         if keyval == Gdk.KEY_Escape or chr(keyval) == "q":
             self.destroy()
 
-    # detect clicks in the application window
-    # def on_button_press_event(self, widget, event):
-    #     print("clicked")
-
-
-# TODO destroy if mouse is clicked outside the window
+        if keyval == Gdk.KEY_Shift_L: # Move the last focused window to the ws
+            self.movewindow = True
+    
+    def on_click_bg(self, widget, event):
+        if event.type == Gdk.EventType.BUTTON_PRESS:
+            self.destroy()
+  
 win = WorkspaceSelector()
 win.connect("destroy", Gtk.main_quit)
 win.show_all()

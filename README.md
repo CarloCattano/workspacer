@@ -21,6 +21,8 @@ Ensure you have the following dependencies installed:
 
 Simply bind the `workspaced.py` script to a key or integrate it into your system bar for quick access to workspace previews and switching.
 
+- **Move Window to Workspace**: hold shift while clicking on a workspace, and the last active window will be moved to the selected workspace.
+
 #### Example Keybinding
 
 ```bash
@@ -75,3 +77,4 @@ Example configuration for Waybar, trigger the Workspace Switcher when clicking o
 - Test compatibility with animations
 - ~~Prevent script from executing multiple instances~~
 - ~~Automatically remove empty workspaces when windows are closed~~
+
