@@ -7,10 +7,7 @@ screen_shot()
     # Store the x, y, width, and height values of the active monitor into variables
     read x y width height <<< $(hyprctl monitors -j | jq -r '.[] | select(.focused) | "\(.x) \(.y) \(.width) \(.height)"')
 
-    offset_x=$x
-    offset_y=$y
-
-    geometry="${offset_x},${offset_y} ${width}x${height}"
+    geometry="${x},${y} ${width}x${height}"
 
     active_workspace=$(hyprctl activeworkspace -j | jq '.id')
     grim -t jpeg -q 50 -g "$geometry" "/tmp/workspace$active_workspace.jpg"
