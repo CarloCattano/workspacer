@@ -1,8 +1,8 @@
 ## Visual Workspace Switcher
-
-![Workspace Switcher](https://github.com/CarloCattano/workspacer/assets/17380530/5d28bcfc-3270-46b2-8372-33d504880855)
-
-![Image](https://github.com/CarloCattano/workspacer/assets/17380530/3641ef97-ab04-48a4-aa3e-922ee42b1fbc)
+<div>
+<img src="https://github.com/CarloCattano/workspacer/assets/17380530/5d28bcfc-3270-46b2-8372-33d504880855" width=40% height=40%>
+<img src="https://github.com/CarloCattano/workspacer/assets/17380530/eb77c686-95d3-4fea-9b9b-e99c84f41f08" width=40% height=40%>
+</div>
 
 Developed for [Hyprland](https://hyprland.org)
 
@@ -27,8 +27,8 @@ Simply bind the `workspaced.py` script to a key or integrate it into your system
 
 - One screenshot per ws/monitor
 - Customizable colors
-- Move last focused window to workspace (holding left shift while clicking on a workspace)
-- New Empty workspace [ + ] to go or move a window to a new workspace (while holding shift)
+- Move last focused window to workspace (holding left shift while clicking on a workspace) *a.k.a* _fake_drag_n_drop_
+- New Empty workspace [ + ] to go, or move a window to a new workspace if while holding left-shift
 
 #### Example Keybinding
 
