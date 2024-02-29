@@ -23,6 +23,13 @@ Simply bind the `workspaced.py` script to a key or integrate it into your system
 
 - **Move Window to Workspace**: hold shift while clicking on a workspace, and the last active window will be moved to the selected workspace.
 
+### Features
+
+- One screenshot per ws/monitor
+- Customizable colors
+- Move last focused window to workspace (holding left shift while clicking on a workspace)
+- New Empty workspace [ + ] to go or move a window to a new workspace (while holding shift)
+
 #### Example Keybinding
 
 ```bash
@@ -74,6 +81,7 @@ Example configuration for Waybar, trigger the Workspace Switcher when clicking o
 
 - Implement navigation with vim keys (hjkl)
 - Test compatibility with animations
+- ~~Draw an empty workspace extra to move a window to a new workspace~~
 - ~~Prevent script from executing multiple instances~~
 - ~~Automatically remove empty workspaces when windows are closed~~
 - ~~Optimize screenshot mechanism for faster performance~~
