@@ -79,6 +79,7 @@ Example configuration for Waybar, trigger the Workspace Switcher when clicking o
 
 ### TODO
 
+- When ws is created silently(without focus), then our UI doesnt reflect that new ws
 - Implement navigation with vim keys (hjkl)
 - Test compatibility with animations
 - ~~Draw an empty workspace extra to move a window to a new workspace~~
