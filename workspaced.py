@@ -165,12 +165,11 @@ class WorkspaceSelector(Gtk.Window):
         plus_sign.set_markup("<span font='48'>&#43;</span>")
         empty_ws_b.add(plus_sign)
         empty_ws_b.set_opacity(0.5)
-        empty_ws_b.set_size_request(image_width, image_height / 2)
         empty_ws_b.set_relief(Gtk.ReliefStyle.NONE)
         empty_ws_b.get_style_context().add_class("workspace-button")
         empty_ws_b.connect("clicked", self.on_empty_selected)
-        self.grid.attach(empty_ws_b, 1, row + 1, 1, 1)
-
+        self.grid.attach_next_to(empty_ws_b, button, Gtk.PositionType.RIGHT, 1, 1)
+    
     def move_last_focused_window(self, workspace_index):
         last_focused_window = os.popen("hyprctl clients -j | jq '.[] | select(.focusHistoryID == 1) | .pid'").read().strip()
         os.system(f"hyprctl dispatch focuswindow pid:" + str(last_focused_window))
