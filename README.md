@@ -73,8 +73,8 @@ Example configuration for Waybar, trigger the Workspace Switcher when clicking o
 ### TODO
 
 - Implement navigation with vim keys (hjkl)
-- Optimize screenshot mechanism for faster performance
 - Test compatibility with animations
 - ~~Prevent script from executing multiple instances~~
 - ~~Automatically remove empty workspaces when windows are closed~~
+- ~~Optimize screenshot mechanism for faster performance~~
 
