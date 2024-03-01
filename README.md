@@ -1,7 +1,7 @@
 ## Visual Workspace Switcher
 <div>
-<img src="https://github.com/CarloCattano/workspacer/assets/17380530/5d28bcfc-3270-46b2-8372-33d504880855" width=40% height=40%>
-<img src="https://github.com/CarloCattano/workspacer/assets/17380530/eb77c686-95d3-4fea-9b9b-e99c84f41f08" width=40% height=40%>
+<img src="https://github.com/CarloCattano/workspacer/assets/17380530/5d28bcfc-3270-46b2-8372-33d504880855">
+<img src="https://github.com/CarloCattano/workspacer/assets/17380530/eb77c686-95d3-4fea-9b9b-e99c84f41f08">
 </div>
 
 Developed for [Hyprland](https://hyprland.org)
